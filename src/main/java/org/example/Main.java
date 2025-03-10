@@ -2,6 +2,9 @@ package org.example;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello, World!");
+        // board 6
+        // figura new Figura()
+        //setFiguraPo(figura,positioj)
+
     }
 }
