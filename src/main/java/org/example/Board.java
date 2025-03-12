@@ -11,6 +11,11 @@ public class Board {
     //block = 2
 
     public Board (int size) {
+
+        if (size <= 0) {
+            throw new IllegalArgumentException("Size must be greater than 0");
+        }
+
         this.size = size;
         this.board = new int[size][size];
         for (int i = 0; i < size; i++) {
@@ -41,15 +46,14 @@ public class Board {
         this.board[x][y] = 2;
     }
 
-
-    public static void main(String[] args) {
-        Board board = new Board(8);
-        board.placeFigure(0, 0);
-        board.placeBlock(1, 1);
-
-
+    public boolean isOccupied(int x, int y) {
+        if(x < 0 || x >= this.size || y < 0 || y >= this.size){
+            return false;
+        }
+        return this.board[x][y] != 0;
     }
 
-
-
+    public int getSize() {
+        return size;
+    }
 }
