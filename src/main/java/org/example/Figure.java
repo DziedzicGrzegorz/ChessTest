@@ -21,10 +21,16 @@ public class Figure {
 
         List<Position> possibleMoves = new ArrayList<>();
 
-
+        //right-down
         checkDirection(possibleMoves, 1, 1);
+
+        //left-down
         checkDirection(possibleMoves, 1, -1);
+
+        //right-up
         checkDirection(possibleMoves, -1, 1);
+
+        //left-up
         checkDirection(possibleMoves, -1, -1);
 
         return possibleMoves;
