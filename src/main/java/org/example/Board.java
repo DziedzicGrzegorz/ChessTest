@@ -26,12 +26,13 @@ public class Board {
     }
 
     public void checkPositionCollision(int x,int y){
-        if (this.board[x][y] > 0) {
-            throw new IllegalArgumentException("Position is already occupied");
-        }
         if(x < 0 || x >= this.size || y < 0 || y >= this.size){
             throw new IllegalArgumentException("Position is out of bounds");
         }
+        if (this.board[x][y] > 0) {
+            throw new IllegalArgumentException("Position is already occupied");
+        }
+
     }
 
 
