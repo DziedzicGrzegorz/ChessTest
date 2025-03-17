@@ -21,16 +21,23 @@ public class Board {
         }
     }
 
-    public void checkPositionCollision(int x,int y){
+
+    public void checkOutOfBounds (int x, int y) {
         if(x < 0 || x >= this.size || y < 0 || y >= this.size){
-            throw new IllegalArgumentException("Position is out of bounds");
+            throw new IllegalArgumentException("Position"+"x"+" "+"y"+" is out of bounds");
         }
+    }
+    
+    public void checkPositionCollision(int x,int y){
+       checkOutOfBounds(x,y);
+
         if (this.board[x][y] > 0) {
             throw new IllegalArgumentException("Position is already occupied");
         }
     }
 
     public void placeFigure(int x, int y) {
+        checkOutOfBounds(x,y);
         this.board[x][y] = 1;
     }
 
@@ -40,23 +47,17 @@ public class Board {
     }
 
     public boolean isOccupied(int x, int y) {
-        if(x < 0 || x >= this.size || y < 0 || y >= this.size){
-            return false;
-        }
+        checkOutOfBounds(x,y);
         return this.board[x][y] != 0;
     }
 
     public boolean isFigure(int x, int y) {
-        if(x < 0 || x >= this.size || y < 0 || y >= this.size){
-            return false;
-        }
+        checkOutOfBounds(x,y);
         return this.board[x][y] == 1;
     }
 
     public boolean isBlock(int x, int y) {
-        if(x < 0 || x >= this.size || y < 0 || y >= this.size){
-            return false;
-        }
+        checkOutOfBounds(x,y);
         return this.board[x][y] == 2;
     }
 
