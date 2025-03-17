@@ -5,10 +5,6 @@ import java.util.List;
 public class Board {
     private final int size;
     private final int [][] board;
-    // tab = 0
-    //tab[i][j] = 1;
-    //while podaj pzyje x i y w ktoam ma byc figura
-    //block = 2
 
     public Board (int size) {
 
@@ -32,24 +28,7 @@ public class Board {
         if (this.board[x][y] > 0) {
             throw new IllegalArgumentException("Position is already occupied");
         }
-
     }
-
-
-public void printBoard() {
-    for (int i = 0; i < this.size; i++) {
-        for (int j = 0; j < this.size; j++) {
-            if (this.board[i][j] == 1) {
-                System.out.print("[f] ");
-            } else if (this.board[i][j] == 2) {
-                System.out.print("[b] ");
-            } else {
-                System.out.print("[.] ");
-            }
-        }
-        System.out.println();
-    }
-}
 
     public void placeFigure(int x, int y) {
         this.board[x][y] = 1;
