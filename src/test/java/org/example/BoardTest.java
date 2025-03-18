@@ -22,21 +22,22 @@ public class BoardTest {
         @ValueSource(ints = {1, 3, 5, 8, 10, 100})
         @DisplayName("Should create board with valid sizes")
         void shouldCreateBoardWithValidSizes(int size) {
-            // when
             Board board = new Board(size);
 
-            // then
             assertEquals(size, board.getSize());
+        }
+
+        @Test
+        void GetSize(){
+            Board board = new Board(4);
+            assertEquals(4, board.getSize());
         }
 
         @Test
         @DisplayName("Should throw exception when creating board with invalid size")
         void shouldThrowExceptionWhenCreatingBoardWithInvalidSize() {
-            // given
-            int invalidSize = 0;
 
-            // when & then
-            assertThrows(IllegalArgumentException.class, () -> new Board(invalidSize));
+            assertThrows(IllegalArgumentException.class, () -> new Board(0));
             assertThrows(IllegalArgumentException.class, () -> new Board(-1));
         }
     }
@@ -54,13 +55,10 @@ public class BoardTest {
         })
         @DisplayName("Should place figure at valid position")
         void shouldPlaceFigureAtValidPosition(int size, int x, int y) {
-            // given
             Board board = new Board(size);
 
-            // when
             board.placeFigure(x, y);
 
-            // then
             assertTrue(board.isFigure(x, y));
             assertFalse(board.isBlock(x, y));
             assertTrue(board.isOccupied(x, y));
@@ -75,14 +73,9 @@ public class BoardTest {
         })
         @DisplayName("Should handle out of bounds figures correctly")
         void shouldHandleOutOfBoundsFiguresCorrectly(int size, int x, int y) {
-            // given
             Board board = new Board(size);
 
-            // when & then
-            // Out of bounds checking should be handled by your implementation
-            // Here we're just testing the isOccupied and isFigure methods
-            assertFalse(board.isOccupied(x, y));
-            assertFalse(board.isFigure(x, y));
+            assertThrows(IllegalArgumentException.class , () -> board.placeFigure(x, y));
         }
     }
 
@@ -99,13 +92,10 @@ public class BoardTest {
         })
         @DisplayName("Should place block at valid position")
         void shouldPlaceBlockAtValidPosition(int size, int x, int y) {
-            // given
             Board board = new Board(size);
 
-            // when
             board.placeBlock(x, y);
 
-            // then
             assertTrue(board.isBlock(x, y));
             assertFalse(board.isFigure(x, y));
             assertTrue(board.isOccupied(x, y));
@@ -120,27 +110,23 @@ public class BoardTest {
         })
         @DisplayName("Should throw exception when placing block out of bounds")
         void shouldThrowExceptionWhenPlacingBlockOutOfBounds(int size, int x, int y) {
-            // given
             Board board = new Board(size);
 
-            // when & then
             assertThrows(IllegalArgumentException.class, () -> board.placeBlock(x, y));
         }
 
         @Test
         @DisplayName("Should throw exception when placing block on occupied position")
         void shouldThrowExceptionWhenPlacingBlockOnOccupiedPosition() {
-            // given
             Board board = new Board(5);
             int x = 2;
             int y = 3;
 
-            // when
             board.placeBlock(x, y);
 
-            // then
             assertThrows(IllegalArgumentException.class, () -> board.placeBlock(x, y));
         }
+
     @Test
     void checkPositionCollision() {
         List<Position> possibleMoves = new ArrayList<>();
@@ -255,6 +241,58 @@ public class BoardTest {
 
         assertEquals(possibleMoves, figure.getPossibleMoves());
     }
+    @Test
+    void checkRightUpperCorner() {
+        List<Position> possibleMoves = new ArrayList<>();
+        Board board = new Board(8);
+        Figure figure = new Figure(0, 7, board);
+
+        possibleMoves.add(new Position(1, 6));
+        possibleMoves.add(new Position(2, 5));
+        possibleMoves.add(new Position(3, 4));
+        possibleMoves.add(new Position(4, 3));
+        possibleMoves.add(new Position(5, 2));
+        possibleMoves.add(new Position(6, 1));
+        possibleMoves.add(new Position(7, 0));
+
+        assertEquals(possibleMoves, figure.getPossibleMoves());
+
+    }
+
+    @Test
+    void checkLeftLowerCorner() {
+        List<Position> possibleMoves = new ArrayList<>();
+        Board board = new Board(8);
+        Figure figure = new Figure(7,0, board);
+
+        possibleMoves.add(new Position(6,1));
+        possibleMoves.add(new Position(5,2));
+        possibleMoves.add(new Position(4,3));
+        possibleMoves.add(new Position(3,4));
+        possibleMoves.add(new Position(2,5));
+        possibleMoves.add(new Position(1,6));
+        possibleMoves.add(new Position(0,7));
+
+        assertEquals(possibleMoves, figure.getPossibleMoves());
+    }
+
+    @Test
+    void checkRightLowerCorner() {
+        List<Position> possibleMoves = new ArrayList<>();
+        Board board = new Board(8);
+        Figure figure = new Figure(7,7, board);
+
+        possibleMoves.add(new Position(6,6));
+        possibleMoves.add(new Position(5,5));
+        possibleMoves.add(new Position(4,4));
+        possibleMoves.add(new Position(3,3));
+        possibleMoves.add(new Position(2,2));
+        possibleMoves.add(new Position(1,1));
+        possibleMoves.add(new Position(0,0));
+
+        assertEquals(possibleMoves, figure.getPossibleMoves());
+    }
+
     @Nested
     @DisplayName("Complex Board Scenarios")
     class ComplexBoardScenarios {
@@ -262,16 +300,13 @@ public class BoardTest {
         @Test
         @DisplayName("Should handle multiple figures and blocks")
         void shouldHandleMultipleFiguresAndBlocks() {
-            // given
             Board board = new Board(5);
 
-            // when
             board.placeFigure(0, 0);
             board.placeFigure(4, 4);
             board.placeBlock(1, 1);
             board.placeBlock(3, 3);
 
-            // then
             assertTrue(board.isFigure(0, 0));
             assertTrue(board.isFigure(4, 4));
             assertTrue(board.isBlock(1, 1));
@@ -283,14 +318,11 @@ public class BoardTest {
         @Test
         @DisplayName("Should correctly identify different positions")
         void shouldCorrectlyIdentifyDifferentPositions() {
-            // given
             Board board = new Board(3);
 
-            // when
             board.placeFigure(0, 0);
             board.placeBlock(1, 1);
 
-            // then
             assertTrue(board.isFigure(0, 0));
             assertFalse(board.isBlock(0, 0));
 
@@ -306,18 +338,14 @@ public class BoardTest {
     @Test
     @DisplayName("Should check position collision correctly")
     void shouldCheckPositionCollisionCorrectly() {
-        // given
         Board board = new Board(3);
 
-        // 1. Test collision with figure
         board.placeFigure(0, 0);
         assertThrows(IllegalArgumentException.class, () -> board.checkPositionCollision(0, 0));
 
-        // 2. Test collision with block
         board.placeBlock(1, 1);
         assertThrows(IllegalArgumentException.class, () -> board.checkPositionCollision(1, 1));
 
-        // 3. Test out of bounds
         assertThrows(IllegalArgumentException.class, () -> board.checkPositionCollision(3, 0));
         assertThrows(IllegalArgumentException.class, () -> board.checkPositionCollision(0, 3));
         assertThrows(IllegalArgumentException.class, () -> board.checkPositionCollision(-1, 0));
