@@ -6,11 +6,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.hamcrest.MatcherAssert;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BoardTest {
 
@@ -24,19 +27,18 @@ public class BoardTest {
         void shouldCreateBoardWithValidSizes(int size) {
             Board board = new Board(size);
 
-            assertEquals(size, board.getSize());
+            MatcherAssert.assertThat(board.getSize(), is(size));
         }
 
         @Test
         void GetSize(){
             Board board = new Board(4);
-            assertEquals(4, board.getSize());
+            assertThat(board.getSize(), is(4));
         }
 
         @Test
         @DisplayName("Should throw exception when creating board with invalid size")
         void shouldThrowExceptionWhenCreatingBoardWithInvalidSize() {
-
             assertThrows(IllegalArgumentException.class, () -> new Board(0));
             assertThrows(IllegalArgumentException.class, () -> new Board(-1));
         }
@@ -59,9 +61,9 @@ public class BoardTest {
 
             board.placeFigure(x, y);
 
-            assertTrue(board.isFigure(x, y));
-            assertFalse(board.isBlock(x, y));
-            assertTrue(board.isOccupied(x, y));
+            MatcherAssert.assertThat(board.isFigure(x, y), is(true));
+            MatcherAssert.assertThat(board.isBlock(x, y), is(false));
+            MatcherAssert.assertThat(board.isOccupied(x, y), is(true));
         }
 
         @ParameterizedTest
@@ -96,9 +98,9 @@ public class BoardTest {
 
             board.placeBlock(x, y);
 
-            assertTrue(board.isBlock(x, y));
-            assertFalse(board.isFigure(x, y));
-            assertTrue(board.isOccupied(x, y));
+            MatcherAssert.assertThat(board.isBlock(x, y), is(true));
+            MatcherAssert.assertThat(board.isFigure(x, y), is(false));
+            MatcherAssert.assertThat(board.isOccupied(x, y), is(true));
         }
 
         @ParameterizedTest
@@ -127,27 +129,27 @@ public class BoardTest {
             assertThrows(IllegalArgumentException.class, () -> board.placeBlock(x, y));
         }
 
-    @Test
-    void checkPositionCollision() {
-        List<Position> possibleMoves = new ArrayList<>();
-        Figure figure = new Figure(4, 4, new Board(8));
+        @Test
+        void checkPositionCollision() {
+            List<Position> possibleMoves = new ArrayList<>();
+            Figure figure = new Figure(4, 4, new Board(8));
 
-        possibleMoves.add(new Position(5, 5));
-        possibleMoves.add(new Position(6, 6));
-        possibleMoves.add(new Position(7, 7));
-        possibleMoves.add(new Position(5, 3));
-        possibleMoves.add(new Position(6, 2));
-        possibleMoves.add(new Position(7, 1));
-        possibleMoves.add(new Position(3, 5));
-        possibleMoves.add(new Position(2, 6));
-        possibleMoves.add(new Position(1, 7));
-        possibleMoves.add(new Position(3, 3));
-        possibleMoves.add(new Position(2, 2));
-        possibleMoves.add(new Position(1, 1));
-        possibleMoves.add(new Position(0, 0));
+            possibleMoves.add(new Position(5, 5));
+            possibleMoves.add(new Position(6, 6));
+            possibleMoves.add(new Position(7, 7));
+            possibleMoves.add(new Position(5, 3));
+            possibleMoves.add(new Position(6, 2));
+            possibleMoves.add(new Position(7, 1));
+            possibleMoves.add(new Position(3, 5));
+            possibleMoves.add(new Position(2, 6));
+            possibleMoves.add(new Position(1, 7));
+            possibleMoves.add(new Position(3, 3));
+            possibleMoves.add(new Position(2, 2));
+            possibleMoves.add(new Position(1, 1));
+            possibleMoves.add(new Position(0, 0));
 
-        assertEquals(possibleMoves, figure.getPossibleMoves());
-    }
+            MatcherAssert.assertThat(figure.getPossibleMoves(), is(possibleMoves));
+        }
         @Test
         @DisplayName("Should throw exception when placing block on figure")
         void shouldThrowExceptionWhenPlacingBlockOnFigure() {
@@ -186,10 +188,9 @@ public class BoardTest {
         possibleMoves.add(new Position(1, 1));
         possibleMoves.add(new Position(0, 0));
 
-        assertEquals(possibleMoves, figure.getPossibleMoves());
-
+        MatcherAssert.assertThat(figure.getPossibleMoves(), is(possibleMoves));
     }
-        @Test
+    @Test
     void checkPositionCollisionWithFigureAndBlockage() {
         List<Position> possibleMoves1 = new ArrayList<>();
         List<Position> possibleMoves2 = new ArrayList<>();
@@ -220,11 +221,10 @@ public class BoardTest {
         possibleMoves2.add(new Position(5, 5));
         possibleMoves2.add(new Position(4, 4));
 
-        assertEquals(possibleMoves1, figure1.getPossibleMoves());
-        assertEquals(possibleMoves2, figure2.getPossibleMoves());
-
+        MatcherAssert.assertThat(figure1.getPossibleMoves(), is(possibleMoves1));
+        MatcherAssert.assertThat(figure2.getPossibleMoves(), is(possibleMoves2));
     }
-        @Test
+    @Test
     void checkCollisionInLeftUpperCorner() {
         List<Position> possibleMoves = new ArrayList<>();
         Board board = new Board(8);
@@ -239,7 +239,7 @@ public class BoardTest {
         possibleMoves.add(new Position(6, 6));
         possibleMoves.add(new Position(7, 7));
 
-        assertEquals(possibleMoves, figure.getPossibleMoves());
+        MatcherAssert.assertThat(figure.getPossibleMoves(), is(possibleMoves));
     }
     @Test
     void checkRightUpperCorner() {
@@ -255,8 +255,7 @@ public class BoardTest {
         possibleMoves.add(new Position(6, 1));
         possibleMoves.add(new Position(7, 0));
 
-        assertEquals(possibleMoves, figure.getPossibleMoves());
-
+        MatcherAssert.assertThat(figure.getPossibleMoves(), is(possibleMoves));
     }
 
     @Test
@@ -273,7 +272,7 @@ public class BoardTest {
         possibleMoves.add(new Position(1,6));
         possibleMoves.add(new Position(0,7));
 
-        assertEquals(possibleMoves, figure.getPossibleMoves());
+        MatcherAssert.assertThat(figure.getPossibleMoves(), is(possibleMoves));
     }
 
     @Test
@@ -290,7 +289,7 @@ public class BoardTest {
         possibleMoves.add(new Position(1,1));
         possibleMoves.add(new Position(0,0));
 
-        assertEquals(possibleMoves, figure.getPossibleMoves());
+        MatcherAssert.assertThat(figure.getPossibleMoves(), is(possibleMoves));
     }
 
     @Nested
@@ -307,12 +306,12 @@ public class BoardTest {
             board.placeBlock(1, 1);
             board.placeBlock(3, 3);
 
-            assertTrue(board.isFigure(0, 0));
-            assertTrue(board.isFigure(4, 4));
-            assertTrue(board.isBlock(1, 1));
-            assertTrue(board.isBlock(3, 3));
+            MatcherAssert.assertThat(board.isFigure(0, 0), is(true));
+            MatcherAssert.assertThat(board.isFigure(4, 4), is(true));
+            MatcherAssert.assertThat(board.isBlock(1, 1), is(true));
+            MatcherAssert.assertThat(board.isBlock(3, 3), is(true));
 
-            assertFalse(board.isOccupied(2, 2));
+            MatcherAssert.assertThat(board.isOccupied(2, 2), is(false));
         }
 
         @Test
@@ -323,15 +322,15 @@ public class BoardTest {
             board.placeFigure(0, 0);
             board.placeBlock(1, 1);
 
-            assertTrue(board.isFigure(0, 0));
-            assertFalse(board.isBlock(0, 0));
+            MatcherAssert.assertThat(board.isOccupied(2, 2), is(false));
+            MatcherAssert.assertThat(board.isFigure(2, 2), is(false));
 
-            assertTrue(board.isBlock(1, 1));
-            assertFalse(board.isFigure(1, 1));
+            MatcherAssert.assertThat(board.isBlock(2, 2), is(false));
+            MatcherAssert.assertThat(board.isBlock(1, 1), is(true));
 
-            assertFalse(board.isOccupied(2, 2));
-            assertFalse(board.isFigure(2, 2));
-            assertFalse(board.isBlock(2, 2));
+            MatcherAssert.assertThat(board.isFigure(1, 1), is(false));
+            MatcherAssert.assertThat(board.isFigure(0, 0), is(true));
+            MatcherAssert.assertThat(board.isBlock(0, 0), is(false));
         }
     }
 
