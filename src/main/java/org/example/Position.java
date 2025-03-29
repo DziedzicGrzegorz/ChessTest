@@ -2,7 +2,7 @@ package org.example;
 
 import java.util.Objects;
 
-public class Position implements Comparable<Position> {
+public class Position {
     private int x;
     private int y;
 
@@ -25,15 +25,6 @@ public class Position implements Comparable<Position> {
 
     public void setY(int y) {
         this.y = y;
-    }
-
-    @Override
-    public int compareTo(Position o) {
-        if (this.x == o.x) {
-            return Integer.compare(this.y, o.y);
-        }
-        return Integer.compare(this.x, o.x);
-
     }
 
     @Override
