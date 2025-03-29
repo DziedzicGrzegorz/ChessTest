@@ -3,13 +3,13 @@ package org.example;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Figure {
+public class Rook {
     private final int x;
     private final int y;
     private final Board board;
 
 
-    public Figure(int x, int y, Board board) {
+    public Rook(int x, int y, Board board) {
         board.checkPositionCollision(x, y);
         this.x = x;
         this.y = y;

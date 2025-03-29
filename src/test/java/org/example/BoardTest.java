@@ -46,7 +46,7 @@ public class BoardTest {
 
     @Nested
     @DisplayName("Figure Placement Tests")
-    class FigurePlacementTests {
+    class RookPlacementTests {
 
         @ParameterizedTest
         @CsvSource({
@@ -132,7 +132,7 @@ public class BoardTest {
         @Test
         void checkPositionCollision() {
             List<Position> possibleMoves = new ArrayList<>();
-            Figure figure = new Figure(4, 4, new Board(8));
+            Rook rook = new Rook(4, 4, new Board(8));
 
             possibleMoves.add(new Position(5, 5));
             possibleMoves.add(new Position(6, 6));
@@ -148,7 +148,7 @@ public class BoardTest {
             possibleMoves.add(new Position(1, 1));
             possibleMoves.add(new Position(0, 0));
 
-            MatcherAssert.assertThat(figure.getPossibleMoves(), is(possibleMoves));
+            MatcherAssert.assertThat(rook.getPossibleMoves(), is(possibleMoves));
         }
         @Test
         @DisplayName("Should throw exception when placing block on figure")
@@ -170,7 +170,7 @@ public class BoardTest {
         List<Position> possibleMoves = new ArrayList<>();
         Board board = new Board(8);
 
-        Figure figure = new Figure(4, 4, board);
+        Rook rook = new Rook(4, 4, board);
 
         board.placeBlock(6, 6);
         board.placeBlock(6, 2);
@@ -188,7 +188,7 @@ public class BoardTest {
         possibleMoves.add(new Position(1, 1));
         possibleMoves.add(new Position(0, 0));
 
-        MatcherAssert.assertThat(figure.getPossibleMoves(), is(possibleMoves));
+        MatcherAssert.assertThat(rook.getPossibleMoves(), is(possibleMoves));
     }
     @Test
     void checkPositionCollisionWithFigureAndBlockage() {
@@ -197,8 +197,8 @@ public class BoardTest {
 
         Board board = new Board(8);
 
-        Figure figure1 = new Figure(4, 4, board);
-        Figure figure2 = new Figure(6, 6, board);
+        Rook rook1 = new Rook(4, 4, board);
+        Rook rook2 = new Rook(6, 6, board);
 
         board.placeBlock(6, 2);
         board.placeBlock(0, 0);
@@ -221,15 +221,15 @@ public class BoardTest {
         possibleMoves2.add(new Position(5, 5));
         possibleMoves2.add(new Position(4, 4));
 
-        MatcherAssert.assertThat(figure1.getPossibleMoves(), is(possibleMoves1));
-        MatcherAssert.assertThat(figure2.getPossibleMoves(), is(possibleMoves2));
+        MatcherAssert.assertThat(rook1.getPossibleMoves(), is(possibleMoves1));
+        MatcherAssert.assertThat(rook2.getPossibleMoves(), is(possibleMoves2));
     }
     @Test
     void checkCollisionInLeftUpperCorner() {
         List<Position> possibleMoves = new ArrayList<>();
         Board board = new Board(8);
 
-        Figure figure = new Figure(0, 0, board);
+        Rook rook = new Rook(0, 0, board);
 
         possibleMoves.add(new Position(1, 1));
         possibleMoves.add(new Position(2, 2));
@@ -239,13 +239,13 @@ public class BoardTest {
         possibleMoves.add(new Position(6, 6));
         possibleMoves.add(new Position(7, 7));
 
-        MatcherAssert.assertThat(figure.getPossibleMoves(), is(possibleMoves));
+        MatcherAssert.assertThat(rook.getPossibleMoves(), is(possibleMoves));
     }
     @Test
     void checkRightUpperCorner() {
         List<Position> possibleMoves = new ArrayList<>();
         Board board = new Board(8);
-        Figure figure = new Figure(0, 7, board);
+        Rook rook = new Rook(0, 7, board);
 
         possibleMoves.add(new Position(1, 6));
         possibleMoves.add(new Position(2, 5));
@@ -255,14 +255,14 @@ public class BoardTest {
         possibleMoves.add(new Position(6, 1));
         possibleMoves.add(new Position(7, 0));
 
-        MatcherAssert.assertThat(figure.getPossibleMoves(), is(possibleMoves));
+        MatcherAssert.assertThat(rook.getPossibleMoves(), is(possibleMoves));
     }
 
     @Test
     void checkLeftLowerCorner() {
         List<Position> possibleMoves = new ArrayList<>();
         Board board = new Board(8);
-        Figure figure = new Figure(7,0, board);
+        Rook rook = new Rook(7,0, board);
 
         possibleMoves.add(new Position(6,1));
         possibleMoves.add(new Position(5,2));
@@ -272,14 +272,14 @@ public class BoardTest {
         possibleMoves.add(new Position(1,6));
         possibleMoves.add(new Position(0,7));
 
-        MatcherAssert.assertThat(figure.getPossibleMoves(), is(possibleMoves));
+        MatcherAssert.assertThat(rook.getPossibleMoves(), is(possibleMoves));
     }
 
     @Test
     void checkRightLowerCorner() {
         List<Position> possibleMoves = new ArrayList<>();
         Board board = new Board(8);
-        Figure figure = new Figure(7,7, board);
+        Rook rook = new Rook(7,7, board);
 
         possibleMoves.add(new Position(6,6));
         possibleMoves.add(new Position(5,5));
@@ -289,7 +289,7 @@ public class BoardTest {
         possibleMoves.add(new Position(1,1));
         possibleMoves.add(new Position(0,0));
 
-        MatcherAssert.assertThat(figure.getPossibleMoves(), is(possibleMoves));
+        MatcherAssert.assertThat(rook.getPossibleMoves(), is(possibleMoves));
     }
 
     @Nested
