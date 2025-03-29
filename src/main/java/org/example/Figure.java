@@ -14,10 +14,10 @@ public class Figure {
         this.x = x;
         this.y = y;
         this.board = board;
-        board.placeFigure(x,y);
+        board.placeFigure(x, y);
     }
 
-    public List<Position> getPossibleMoves(){
+    public List<Position> getPossibleMoves() {
 
         List<Position> possibleMoves = new ArrayList<>();
 
@@ -32,16 +32,14 @@ public class Figure {
         return possibleMoves;
     }
 
-
-
-    public void checkDirection(List<Position> possibleMoves,int dirX,int dirY){
+    public void checkDirection(List<Position> possibleMoves, int dirX, int dirY) {
         int newX = x + dirX;
         int newY = y + dirY;
 
-        while(isValidPosition(newX,newY)){
-            possibleMoves.add(new Position(newX,newY));
+        while (isValidPosition(newX, newY)) {
+            possibleMoves.add(new Position(newX, newY));
 
-            if(board.isOccupied(newX,newY)){
+            if (board.isOccupied(newX, newY)) {
                 break;
             }
             newX += dirX;

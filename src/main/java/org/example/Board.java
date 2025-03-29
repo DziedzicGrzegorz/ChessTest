@@ -1,12 +1,10 @@
 package org.example;
 
-import java.util.List;
-
 public class Board {
     private final int size;
-    private final BoardEnum [][] board;
+    private final BoardEnum[][] board;
 
-    public Board (int size) {
+    public Board(int size) {
 
         if (size <= 0) {
             throw new IllegalArgumentException("Size must be greater than 0");
@@ -21,15 +19,14 @@ public class Board {
         }
     }
 
-
-    public void checkOutOfBounds (int x, int y) {
-        if(x < 0 || x >= this.size || y < 0 || y >= this.size){
-            throw new IllegalArgumentException("Position"+"x"+" "+"y"+" is out of bounds");
+    public void checkOutOfBounds(int x, int y) {
+        if (x < 0 || x >= this.size || y < 0 || y >= this.size) {
+            throw new IllegalArgumentException("Position" + "x" + " " + "y" + " is out of bounds");
         }
     }
-    
-    public void checkPositionCollision(int x,int y){
-       checkOutOfBounds(x,y);
+
+    public void checkPositionCollision(int x, int y) {
+        checkOutOfBounds(x, y);
 
         if (this.board[x][y] != BoardEnum.EMPTY) {
             throw new IllegalArgumentException("Position is already occupied");
@@ -37,7 +34,7 @@ public class Board {
     }
 
     public void placeFigure(int x, int y) {
-        checkOutOfBounds(x,y);
+        checkOutOfBounds(x, y);
         this.board[x][y] = BoardEnum.FIGURE;
     }
 
@@ -47,17 +44,17 @@ public class Board {
     }
 
     public boolean isOccupied(int x, int y) {
-        checkOutOfBounds(x,y);
+        checkOutOfBounds(x, y);
         return this.board[x][y] != BoardEnum.EMPTY;
     }
 
     public boolean isFigure(int x, int y) {
-        checkOutOfBounds(x,y);
+        checkOutOfBounds(x, y);
         return this.board[x][y] == BoardEnum.FIGURE;
     }
 
     public boolean isBlock(int x, int y) {
-        checkOutOfBounds(x,y);
+        checkOutOfBounds(x, y);
         return this.board[x][y] == BoardEnum.BLOCK;
     }
 
