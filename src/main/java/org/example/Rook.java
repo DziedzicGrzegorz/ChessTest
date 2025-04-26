@@ -8,9 +8,9 @@ public class Rook {
     private final int y;
     private final Board board;
 
-
     public Rook(int x, int y, Board board) {
         board.checkPositionCollision(x, y);
+
         this.x = x;
         this.y = y;
         this.board = board;
@@ -22,11 +22,8 @@ public class Rook {
         List<Position> possibleMoves = new ArrayList<>();
 
         checkDirection(possibleMoves, 1, 1);
-
         checkDirection(possibleMoves, 1, -1);
-
         checkDirection(possibleMoves, -1, 1);
-
         checkDirection(possibleMoves, -1, -1);
 
         return possibleMoves;
@@ -42,6 +39,7 @@ public class Rook {
             if (board.isOccupied(newX, newY)) {
                 break;
             }
+
             newX += dirX;
             newY += dirY;
         }
