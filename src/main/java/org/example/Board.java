@@ -34,7 +34,7 @@ public class Board {
     }
 
     public void placeFigure(int x, int y) {
-        checkOutOfBounds(x, y);
+        checkPositionCollision(x, y);
         this.board[x][y] = BoardEnum.FIGURE;
     }
 
