@@ -349,4 +349,40 @@ public class BoardTest {
         assertThrows(IllegalArgumentException.class, () -> board.checkPositionCollision(0, 3));
         assertThrows(IllegalArgumentException.class, () -> board.checkPositionCollision(-1, 0));
     }
+
+    @Test
+    @DisplayName("Should check out of bounds correctly")
+    void shouldCheckOutOfBoundsCorrectly() {
+        Board board = new Board(3);
+
+        // Valid positions should not throw exceptions
+        board.checkOutOfBounds(0, 0);
+        board.checkOutOfBounds(2, 2);
+        board.checkOutOfBounds(1, 1);
+
+        // Invalid positions should throw exceptions
+        assertThrows(IllegalArgumentException.class, () -> board.checkOutOfBounds(-1, 0));
+        assertThrows(IllegalArgumentException.class, () -> board.checkOutOfBounds(0, -1));
+        assertThrows(IllegalArgumentException.class, () -> board.checkOutOfBounds(3, 0));
+        assertThrows(IllegalArgumentException.class, () -> board.checkOutOfBounds(0, 3));
+        assertThrows(IllegalArgumentException.class, () -> board.checkOutOfBounds(3, 3));
+    }
+
+    @Test
+    @DisplayName("Should throw exception when placing figure on occupied position")
+    void shouldThrowExceptionWhenPlacingFigureOnOccupiedPosition() {
+        Board board = new Board(3);
+
+        // Place a figure
+        board.placeFigure(1, 1);
+
+        // Try to place another figure at the same position
+        assertThrows(IllegalArgumentException.class, () -> board.placeFigure(1, 1));
+
+        // Place a block
+        board.placeBlock(0, 0);
+
+        // Try to place a figure on the block
+        assertThrows(IllegalArgumentException.class, () -> board.placeFigure(0, 0));
+    }
 }
