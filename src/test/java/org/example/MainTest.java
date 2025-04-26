@@ -17,6 +17,12 @@ class MainTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
 
+    @Test
+    void testMainClassIsDefined() {
+        // This test verifies that the Main class is defined
+        assertNotNull(Main.class);
+    }
+
     @BeforeEach
     void setUpStreams() {
         System.setOut(new PrintStream(outContent));
